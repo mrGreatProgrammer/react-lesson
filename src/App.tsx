@@ -16,6 +16,9 @@ function App() {
   const [numbers, setNumbers] = React.useState([1,2,3,4,5]);
   const ulRef: React.MutableRefObject<any> = React.useRef();
   const timerRef: React.MutableRefObject<ttimer> = React.useRef();
+  const numbersRef: React.MutableRefObject<any> = React.useRef();
+
+  numbersRef.current = numbers;
   
   const addNumber= ( ) =>{
     setNumbers((prev)=>[...prev, prev.length])
@@ -24,11 +27,14 @@ function App() {
   const deleteNum= ()=>{
     
   }
-  function handleScroll(){
-    console.log("scrolling")
+  const handleScroll = React.useCallback(() => {
+    console.log("scrolling", numbersRef.current);
+  }, [])
+  function addScroll() {
+    ulRef?.current.addEventListener("scroll", handleScroll)
   }
   function removeScroll() {
-    ulRef.current && ulRef?.current.removeEventListener("scroll", handleScroll)
+    ulRef?.current.removeEventListener("scroll", handleScroll)
   }
   function start(){
     timerRef.current = setInterval(addNumber, 1000);
@@ -37,9 +43,9 @@ function App() {
     clearInterval(timerRef.current)
   }
 
-  React.useEffect(()=>{
-    ulRef.current && ulRef?.current.addEventListener("scroll", handleScroll)
-  }, [])
+  // React.useEffect(()=>{
+  //   ulRef?.current.addEventListener("scroll", handleScroll)
+  // }, [])
 
   return (
     <div className="App">
@@ -57,6 +63,7 @@ function App() {
       <button disabled={true} className="btn" onClick={deleteNum} >delete</button>
       <button className="btn" onClick={start} >start timer</button>
       <button className="btn" onClick={stop} >stop timer</button>
+      <button className="btn" onClick={addScroll} >start scrolling</button>
       <button className="btn" onClick={removeScroll} >stop scrolling</button>
 
         {/* <div className="counter">
