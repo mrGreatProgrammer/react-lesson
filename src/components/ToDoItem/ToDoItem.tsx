@@ -1,6 +1,12 @@
 import React from "react";
 
-const ToDoItem = ({title, id, completed}) => {
+interface ToDoItemProps {
+  title: string;
+  id: number | string;
+  completed: boolean;
+}
+
+const ToDoItem = ({title, id, completed}: ToDoItemProps) => {
     const [checked, setChecked] = React.useState(completed);
 
     const cls = ['todo'];

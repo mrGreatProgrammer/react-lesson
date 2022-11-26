@@ -7,7 +7,7 @@ function App() {
   const [todoTitle, setTodoTitle] = React.useState('');
 
   React.useEffect(()=>{
-   const raw = localStorage.getItem('todos') || [];
+   const raw:any = localStorage.getItem('todos') || [];
    setTodos(JSON.parse(raw));
   },[]);
 
